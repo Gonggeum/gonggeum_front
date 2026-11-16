@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="ko">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>공금이 · 화면 디자인 1차</title>
+<style>
+:root{font:15px/1.55 Pretendard,"Malgun Gothic",sans-serif;color:#142638;background:#f3f6fa;--ink:#142638;--muted:#526478;--line:#cdd7e2;--blue:#174bb8;--pale:#eaf1ff}
+*{box-sizing:border-box}
+body{margin:0}button,input,select,textarea{font:inherit;color:inherit}button,summary{cursor:pointer}button{min-height:44px;padding:8px 13px;border:1px solid var(--line);border-radius:4px;background:white;font-weight:700}button:hover:not(:disabled){background:var(--pale)}button.primary{background:var(--blue);color:white;border-color:var(--blue)}button.primary:hover:not(:disabled){background:#133a89}button:disabled{opacity:.55;cursor:default}button.danger{color:#982d28}button.quiet{border-color:transparent;background:transparent;color:var(--blue)}:focus-visible{outline:3px solid #487cff;outline-offset:2px}
+header{background:white;border-bottom:1px solid var(--line)}.bar{max-width:1120px;margin:auto;min-height:64px;padding:6px 16px;display:flex;align-items:center;justify-content:space-between;gap:8px}.brand{display:flex;gap:9px;align-items:center;font-size:18px;font-weight:800;white-space:nowrap}.logo{background:var(--blue);color:white;padding:3px 8px;border-radius:4px;font-size:14px}.review{max-width:1120px;margin:auto;padding:0 16px;background:#e7edf5;color:#344a62}.review summary{padding:10px 0;font-size:13px;font-weight:700}.review .tools{display:flex;gap:10px;flex-wrap:wrap;padding:0 0 12px}.review label{font-size:12px}.review select{font-size:14px}
+.layout{max-width:1120px;margin:auto;display:grid;min-width:0}.layout main{min-width:0;padding:22px 16px calc(105px + env(safe-area-inset-bottom))}.nav{position:fixed;inset:auto 0 0;display:flex;background:white;border-top:1px solid var(--line);z-index:2;padding:6px 4px max(6px,env(safe-area-inset-bottom))}.nav button{flex:1;min-width:0;white-space:nowrap;padding:6px 1px;border:0;font-size:12px}.nav .active{background:var(--pale);color:var(--blue)}
+h1,h2,p{margin:0}h1{font-size:26px;line-height:1.25;letter-spacing:-.045em}h2{font-size:16px;letter-spacing:-.025em}p{margin-top:7px}.heading{margin-bottom:18px}.eyebrow{font-size:12px;font-weight:800;color:var(--blue);letter-spacing:.06em;margin-bottom:6px}.muted,small{color:var(--muted)}small{font-size:13px}.card{background:white;border:1px solid var(--line);border-radius:6px;padding:17px;min-width:0}.stack{display:grid;gap:14px}.section{display:flex;align-items:center;justify-content:space-between;gap:10px}.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.balance{background:#122d57;color:white;border-color:#122d57}.balance small{color:#d1def5}.amount{font-size:clamp(28px,8vw,42px);font-weight:800;letter-spacing:-.04em;font-variant-numeric:tabular-nums;overflow-wrap:anywhere;margin:4px 0 12px}.amount span{font-size:17px}.balance .primary{background:#dae8ff;color:#153a76}.rows{margin-top:8px}.row{width:100%;border:0;border-top:1px solid #e2e8f0;border-radius:0;text-align:left;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px;padding:10px 0;background:white}.row small{display:block;font-weight:400}.row strong{font-variant-numeric:tabular-nums;font-size:14px;white-space:nowrap}.income{color:#155343}.notice{background:#eaf1ff;border-left:3px solid var(--blue);padding:10px 12px;margin-bottom:12px;overflow-wrap:anywhere}.warn{background:#fff4df;border-color:#a8670c}.error{background:#fff0ef;border-color:#ae3931;color:#852a25}.field{display:grid;gap:4px;min-width:0;font-weight:700;font-size:14px}input:not([type=radio],[type=checkbox]),select,textarea{min-width:0;width:100%;max-width:100%;min-height:44px;border:1px solid #aebdce;border-radius:4px;padding:8px;background:white}textarea{min-height:75px}.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.choices{display:flex;flex-wrap:wrap;gap:8px}.choices label{display:inline-flex;align-items:center;gap:5px;min-height:44px;padding:0 10px;border:1px solid var(--line);border-radius:4px}fieldset{min-width:0;border:0;padding:0;margin:0}legend{font-weight:700;padding:0}.keyval{display:flex;justify-content:space-between;gap:8px;padding:7px 0;border-bottom:1px solid #e2e8f0}.keyval b{text-align:right;overflow-wrap:anywhere}.login{max-width:440px;margin:5vh auto 0}.tag{display:inline-block;background:var(--pale);color:#234c92;padding:2px 7px;border-radius:4px;font-size:12px;font-weight:700}.placeholder{height:18px;background:#e7edf5;margin:12px 0;border-radius:3px}.placeholder.short{width:60%}progress{width:100%;accent-color:var(--blue)}dialog{width:min(450px,calc(100% - 28px));border:1px solid var(--line);border-radius:8px;padding:18px;color:var(--ink)}dialog::backdrop{background:#10233b77}
+@media(max-width:799px){main input,main select,main textarea{font-size:16px}.bar{padding-top:max(6px,env(safe-area-inset-top))}.nav{padding-left:max(4px,env(safe-area-inset-left));padding-right:max(4px,env(safe-area-inset-right))}}
+@media(max-width:360px){.two{grid-template-columns:minmax(0,1fr)}}
+@media(min-width:800px){.layout.with-nav{grid-template-columns:186px minmax(0,1fr)}.nav{position:static;align-self:start;display:grid;margin:26px 0 0 16px;padding:8px;border:1px solid var(--line);border-radius:6px}.nav button{text-align:left;padding-left:13px;font-size:14px}.layout main{padding:28px 26px 65px}.columns{display:grid;grid-template-columns:minmax(0, .85fr) minmax(0,1.15fr);gap:16px;align-items:start}.card{padding:20px}.form-width{max-width:700px}}
+</style>
+<header><div class="bar"><span class="brand"><span class="logo" aria-hidden="true">공</span> 공금이</span><div id="context"></div></div></header>
+<details class="review"><summary>시안 검토 도구 · 예시 데이터</summary><div class="tools">
+<label>앱 시작<select id="scenario"><option value="first">첫 로그인</option><option value="last">마지막 장부 복원</option><option value="none">팀 없음</option><option value="noledger">장부 없음</option><option value="lost">마지막 장부 접근 불가</option><option value="invalid">세션 무효</option><option value="offline">복원 통신 실패</option></select></label>
+<label>장부 권한<select id="role"><option value="admin">총무</option><option value="member">참여자</option><option value="locked">잠금 · 총무</option></select></label>
+<label>목표 예산<select id="preset"><option value="unset">미설정</option><option value="zero">0원 · 경고</option><option value="warn">500,000원 · 경고</option><option value="block">500,000원 · 차단</option></select></label>
+<label>조회 상태<select id="view"><option value="normal">기본</option><option value="loading">로딩</option><option value="empty">빈 결과</option><option value="error">조회 실패</option><option value="forbidden">접근 불가</option></select></label>
+<button id="restart" type="button">앱 다시 열기</button></div></details>
+<div class="layout"><nav class="nav" aria-label="장부 메뉴" hidden></nav><main id="screen"></main></div>
+<dialog id="dialog" aria-labelledby="dialog-title"></dialog>
+<script>
+const $ = id => document.getElementById(id);
+const screen = $('screen');
+const dialog = $('dialog');
+const categories = ['홍보비','소모품비','공간비','운영비','기타'];
+const incomeTypes = ['초기 공금','이월','지원금','기부금','기타'];
+const starting = [
+  {id:1, type:'out', name:'포스터 인쇄', amount:120000, date:'2026-11-10', category:'홍보비', author:'김지우'},
+  {id:2, type:'out', name:'설치 자재', amount:98000, date:'2026-11-09', category:'소모품비', author:'이하늘'},
+  {id:3, type:'out', name:'전시장 대관', amount:252000, date:'2026-11-08', category:'공간비', author:'김지우'},
+  {id:4, type:'in', name:'초기 공금', amount:1500000, date:'2026-11-06', category:'초기 공금', author:'김지우'}
+];
+let transactions = starting.map(t => ({...t}));
+let budget = {target:null,policy:'WARN',warning:true,critical:true};
+let budgetHistory = [];
+let page = 'start', caller = '01', selected = null, filters = {}, previous = null;
+let context = 'first', authMessage = '', formType = 'out', formCaller = '01', serial = 5;
+let pickerCaller = null, listScroll = 0, budgetEditing = false, startAttempt = 0;
+const role = () => $('role').value;
+const locked = () => role() === 'locked';
+const admin = () => role() !== 'member';
+const editable = () => admin() && !locked();
+const writable = () => !locked() && selected && (admin() || selected.type === 'out' && selected.author === '이하늘');
+const money = n => Number(n).toLocaleString('ko-KR') + '원';
+const spent = () => transactions.filter(t=>t.type==='out').reduce((sum,t)=>sum+t.amount,0);
+const incoming = () => transactions.filter(t=>t.type==='in').reduce((sum,t)=>sum+t.amount,0);
+const safe = value => String(value ?? '').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const btn = (label, action, style='', disabled=false) => `<button type="button" class="${style}" data-act="${action}" ${disabled?'disabled':''}>${label}</button>`;
+const head = (id,title,desc='') => `<div class="heading"><div class="eyebrow">${id}</div><h1 tabindex="-1">${title}</h1>${desc?'<p class="muted">'+desc+'</p>':''}</div>`;
+const notice = (message, style='') => `<div class="notice ${style}" role="status">${message}</div>`;
+const field = (label,name,type='text',value='',extra='') => `<label class="field">${label}<input name="${name}" type="${type}" value="${safe(value)}" ${extra}></label>`;
+const select = (label,name,values,value='',blank='') => `<label class="field">${label}<select name="${name}">${blank?'<option value="">'+blank+'</option>':''}${values.map(v=>`<option ${v===value?'selected':''}>${v}</option>`).join('')}</select></label>`;
+const kv = (k,v) => `<div class="keyval"><span>${k}</span><b>${safe(v)}</b></div>`;
+const actions = (...buttons) => '<div class="actions">'+buttons.join('')+'</div>';
+const lockNotice = () => locked()?notice('마감된 장부입니다. 거래와 목표 예산은 조회할 수 있습니다.','warn'):'';
+const rows = list => list.length?'<div class="rows">'+list.map(t=>`<button type="button" class="row" data-act="tx:${t.id}"><span>${safe(t.name)}<small>${t.date} · ${safe(t.category)} · ${safe(t.author)}</small></span><strong class="${t.type==='in'?'income':''}">${t.type==='in'?'+':'−'}${money(t.amount)}</strong></button>`).join('')+'</div>':'<p class="muted">표시할 거래가 없습니다.</p>';
+const outside = (id,title) => head(id,title)+notice('이 화면은 이동 위치만 연결했습니다. 세부 시안은 다음 검토 범위입니다.')+btn('돌아가기','back');
+function go(next) {
+  if(next==='00') pickerCaller=['01','02','04','05','07'].includes(page)?page:null;
+  page = next;
+  $('view').value = 'normal';
+  render();
+  window.scrollTo(0,next==='02'?listScroll:0);
+  screen.querySelector('h1')?.focus({preventScroll:true});
+}
+function openSub(next) { previous=page; go(next); }
+function enter() {
+  if (context==='last') go('01');
+  else go('00');
+}
+function startup(retry=false) {
+  const attempt=++startAttempt;
+  authMessage='';
+  context=$('scenario').value;
+  go('start');
+  setTimeout(()=>{
+    if (page!=='start' || attempt!==startAttempt) return;
+    if (context==='offline' && !retry) { go('offline'); return; }
+    if (['last','none','noledger','lost','offline'].includes(context)) { enter(); return; }
+    if (context==='invalid') authMessage='로그인 세션이 만료되었습니다. 다시 로그인해 주세요.';
+    go('06');
+  },650);
+}
+function modal(title,html,confirm,label='확인') {
+  dialog.innerHTML=`<h2 id="dialog-title">${title}</h2>${html}`+
+    actions('<button type="button" data-dialog="cancel" autofocus>취소</button>',confirm?`<button class="primary" type="button" data-dialog="confirm">${label}</button>`:'');
+  dialog.querySelector('[data-dialog=cancel]').onclick=()=>dialog.close();
+  const button=dialog.querySelector('[data-dialog=confirm]');
+  if(button) button.onclick=()=>{dialog.close();confirm();};
+  dialog.showModal();
+}
+function setPreset() {
+  const preset=$('preset').value;
+  budget={target:{unset:null,zero:0,warn:500000,block:500000}[preset],policy:preset==='block'?'BLOCK':'WARN',warning:true,critical:true};
+  budgetHistory=[];
+}
+function loginPage() {
+  return `<section class="login card">${head('06 · 인증','로그인','팀의 거래 기록과 잔액을 확인하세요.')}
+  ${authMessage?notice(authMessage,'warn'):''}
+  <form id="login" class="stack">
+  ${field('아이디 또는 이메일','identifier','text','','required maxlength="254" autocomplete="username"')}
+  ${field('비밀번호','password','password','','required autocomplete="current-password"')}
+  <button class="primary">로그인</button><small>시안에서는 임의의 값을 입력해 진행할 수 있습니다.</small></form>
+  ${actions(btn('비밀번호 찾기','sub:06-reset','quiet'),btn('회원가입','sub:06-join','quiet'))}</section>`;
+}
+function picker() {
+  const noTeam=context==='none', noLedger=context==='noledger';
+  return (pickerCaller?btn('← 장부로 돌아가기','picker-back','quiet'):'')+head('00 · 장부 선택','팀·장부 선택','장부를 열어 기록을 확인하세요.')+
+  (context==='lost'?notice('마지막 장부에 접근할 수 없습니다. 이용 가능한 장부를 선택해 주세요.','warn'):'')+
+  `<div class="stack form-width"><section class="card">${noTeam?'<h2>소속 팀이 없습니다</h2><p class="muted">팀을 만들거나 받은 초대를 확인하세요.</p>':
+  '<label class="field">팀<select aria-label="팀"><option>모아 기획팀</option></select></label>'}
+  ${actions(btn('팀 만들기','sub:07-team'),btn('초대 확인','sub:12-invite','quiet'))}</section>
+  ${noTeam?'':`<section class="card"><h2>참여 장부</h2>${noLedger?'<p class="muted">참여 중인 장부가 없습니다.</p>'+actions(admin()?btn('장부 만들기','sub:07-ledger','primary'):'',btn('참여 가능한 장부 보기','sub:00-public')):'<button type="button" class="row" data-act="go:01"><span>가을 전시 준비<small>'+ (locked()?'마감 · 조회 가능':'운영 중')+'</small></span><span aria-hidden="true">›</span></button>'}</section>`}
+  ${actions(btn('내 계정','sub:13','quiet'))}</div>`;
+}
+function home() {
+  return head('01 · 홈','가을 전시 준비','모아 기획팀')+lockNotice()+
+  `<div class="columns stack"><section class="card balance"><small>장부 잔액</small><div class="amount">${money(incoming()-spent())}</div>
+  ${actions(btn('거래 등록','record','primary',locked()),btn('영수증으로 기록','sub:09','',locked()))}</section>
+  <section class="card"><div class="section"><h2>최근 거래</h2>${btn('전체 보기','go:02','quiet')}</div>${rows(transactions.slice(0,3))}</section></div>`;
+}
+function list() {
+  const {query='',type='',category='',author='',from='',to=''}=filters;
+  const matching=transactions.filter(t=>(!query || (t.name+' '+(t.memo||'')).includes(query))&&(!type||type===t.type)&&(!category||category===t.category)&&(!author||author===t.author)&&(!from||t.date>=from)&&(!to||t.date<=to));
+  const sum=t=>matching.filter(x=>x.type===t).reduce((a,x)=>a+x.amount,0);
+  return head('02 · 거래목록','거래 내역','가을 전시 준비')+lockNotice()+
+  `<div class="columns stack"><form class="card stack" id="filters"><h2>거래 검색</h2>
+  ${field('검색어','query','search',query,'placeholder="거래명 또는 메모"')}
+  <fieldset><legend>거래 유형</legend><div class="choices">${[['','전체'],['out','지출'],['in','수입']].map(([v,l])=>`<label><input type="radio" name="type" value="${v}" ${type===v?'checked':''}>${l}</label>`).join('')}</div></fieldset>
+  <div class="two">${select('항목','category',categories,category,'전체 항목')}${select('등록자','author',['김지우','이하늘'],author,'전체 등록자')}</div>
+  <div class="two">${field('시작일','from','date',from)}${field('종료일','to','date',to)}</div><div id="filter-error" role="alert"></div>
+  <div class="actions"><button class="primary">조회</button>${btn('초기화','clear')}</div></form>
+  <section class="card"><div class="section"><h2>조회 결과</h2><span class="tag">${matching.length}건</span></div>
+  ${kv('조건 내 수입',money(sum('in')))}${kv('조건 내 지출',money(sum('out')))}${rows(matching)}
+  ${actions(btn('거래 등록','record','primary',locked()),btn('증빙 모아보기','sub:11','quiet'))}</section></div>`;
+}
+function detail() {
+  if(!selected) return head('05 · 거래 상세','거래를 찾을 수 없습니다')+btn('원래 화면으로','origin');
+  return btn(caller==='01'?'← 홈':'← 거래 내역','origin','quiet')+
+  head('05 · 거래 상세',safe(selected.name),selected.type==='in'?'수입':'지출')+lockNotice()+
+  `<div class="stack form-width"><section class="card"><div class="amount">${money(selected.amount)}</div>
+  ${kv('거래일',selected.date)}${kv('등록자',selected.author)}${kv(selected.type==='out'?'항목':'수입 유형',selected.category)}${kv('메모',selected.memo||'—')}</section>
+  <section class="card"><h2>증빙</h2>${selected.files?.length?selected.files.map(f=>kv('첨부',f)).join(''):'<p class="muted">첨부된 증빙이 없습니다.</p>'}</section>
+  ${writable()?actions(btn('수정','edit','primary'),btn('삭제','delete','danger')):''}</div>`;
+}
+function transactionForm(editing) {
+  const t=editing?selected:{};
+  const out=formType==='out';
+  if(locked() || editing && !writable()) return head(editing?'05 · 수정':'10 · 수동 거래','변경할 수 없습니다')+lockNotice()+btn('돌아가기','cancel-form');
+  return btn('← 돌아가기','cancel-form','quiet')+head(editing?'05 · 수정':'10 · 수동 거래',editing?'거래 수정':'거래 등록')+
+  `<form id="transaction" class="card stack form-width">
+  ${editing||!admin()?'<div class="tag">'+(out?'지출':'수입')+'</div>':`<div class="choices">${btn('지출','type:out',out?'primary':'')}${btn('수입','type:in',out?'':'primary')}</div>`}
+  ${out?field('거래처 (필수)','merchant','text',t.name,'required maxlength="200"')+select('지출 항목','category',categories,t.category):select('수입 유형','category',incomeTypes,t.category)+field('입금자','depositor','text',t.depositor)}
+  <div class="two">${field('금액 (원, 필수)','amount','number',t.amount,'required min="1" step="1" inputmode="numeric"')}${field('거래일 (필수)','date','date',t.date||'2026-11-10','required max="2026-11-10"')}</div>
+  <label class="field">메모<textarea name="memo">${safe(t.memo)}</textarea></label>
+  <label class="field">증빙 추가<input type="file" name="files" accept="image/*" multiple><small>예시에서 파일명만 표시합니다. 기존 파일과 합해 최대 5개입니다.</small></label>
+  ${t.files?.length?'<fieldset><legend>기존 증빙</legend>'+t.files.map((f,i)=>`<label><input type="checkbox" name="remove" value="${i}"> ${safe(f)} 연결 제거</label><br>`).join('')+'</fieldset>':''}
+  <div id="form-error" role="alert"></div>
+  <div class="actions"><button class="primary">${editing?'변경 저장':'등록하기'}</button>${btn('취소','cancel-form')}</div></form>`;
+}
+function settings() {
+  return head('04 · 설정','설정','가을 전시 준비')+lockNotice()+
+  `<div class="stack form-width"><section class="card"><h2>장부 설정</h2>
+  <button type="button" class="row" data-act="budget"><span>목표 예산<small>${editable()?'목표 금액과 초과 시 정책 설정':'목표 금액과 정책 조회'}</small></span><span aria-hidden="true">›</span></button>
+  <button type="button" class="row" data-act="sub:07-members"><span>장부 참여자</span><span aria-hidden="true">›</span></button></section>
+  <section class="card"><h2>내 계정</h2>${actions(btn('보안·계정','sub:13','quiet'),btn('로그아웃','logout','quiet'))}</section></div>`;
+}
+function budgetPage() {
+  const {target,policy,warning,critical}=budget;
+  const amount=spent(), rate=target>0?amount/target*100:null;
+  const options=(name,label,checked)=>`<label><input type="checkbox" name="${name}" ${checked?'checked':''}> ${label}</label>`;
+  return btn('← 설정','go:04','quiet')+head('07 · 목표 예산','목표 예산','가을 전시 준비')+lockNotice()+
+  `<div class="columns stack"><section class="card"><h2>${target===null?'목표 예산 미설정':'예산 현황'}</h2>
+  ${target===null?'<p class="muted">목표 예산 없이 거래를 등록할 수 있습니다.</p>':kv('목표 예산',money(target))}
+  ${kv('확정 지출',money(amount))}
+  ${target===0?kv('소진율','— (목표 예산 0원)'):''}
+  ${rate!==null?kv('소진율',rate.toFixed(1)+'%')+`<progress max="100" value="${Math.min(rate,100)}" aria-label="예산 소진율" style="accent-color:${rate>=100?'#ab312a':rate>=80?'#a65b0c':'#174bb8'}"></progress>`:''}
+  ${target!==null&&amount>target?notice('예산 초과 · '+money(amount-target),'warn'):''}
+  ${kv('예산 초과 시',(policy==='WARN'?'경고':'차단')+(target===null?' · 적용 대기':''))}
+  ${kv('80% / 100% 알림',(warning?'켜짐':'꺼짐')+' / '+(critical?'켜짐':'꺼짐')+(target===null||target===0?' · 적용 대기':''))}
+  ${editable()&&!budgetEditing?actions(btn(target===null?'목표 예산 설정':'목표 예산 변경','budget-edit','primary')):''}
+  ${!editable()?'<p class="muted">'+(locked()?'잠금 상태에서는 예산을 변경할 수 없습니다.':'목표 예산은 총무가 변경할 수 있습니다.')+'</p>':''}</section>
+  ${editable()&&budgetEditing?`<form id="budget-form" class="card stack"><h2>예산 설정</h2>
+  ${field('목표 예산 (원)','amount','number',target??'','required min="0" max="1000000000" step="1" inputmode="numeric"')}
+  <fieldset><legend>예산 초과 시</legend><div class="choices"><label><input type="radio" name="policy" value="WARN" ${policy==='WARN'?'checked':''}> 경고</label><label><input type="radio" name="policy" value="BLOCK" ${policy==='BLOCK'?'checked':''}> 차단</label></div></fieldset>
+  <fieldset><legend>소진율 알림</legend>${options('warning','80% 도달',warning)}<br>${options('critical','100% 도달',critical)}<p><small>양수 예산에 적용됩니다.</small></p></fieldset>
+  ${field('변경 사유','reason','text',target===null&&!budgetHistory.length?'최초 목표 예산 설정':'','maxlength="500"')}
+  <div id="budget-error" role="alert"></div><div class="actions"><button class="primary">예산 저장</button>${btn('취소','budget-cancel')}${target!==null?btn('예산 미설정으로 전환','budget-unset','danger'):''}</div></form>`:''}
+  ${admin()?'<section class="card"><h2>예산 변경 이력</h2>'+(budgetHistory.length?budgetHistory.map(h=>kv(h.change,h.reason||'설정 변경')).join(''):'<p class="muted">표시할 변경 이력이 없습니다.</p>')+'</section>':''}</div>`;
+}
+const pages = {
+  '00':picker,'01':home,'02':list,'04':settings,'05':detail,'05-edit':()=>transactionForm(true),'06':loginPage,'07':budgetPage,'10':()=>transactionForm(false),
+  '06-reset':()=>head('06 · 비밀번호 재설정','비밀번호 재설정','이메일 인증 후 새 비밀번호를 설정하는 흐름입니다.')+notice('이 시안에서 완료 결과를 확인할 수 있습니다.')+actions(btn('재설정 완료 상태 보기','reset-done','primary'),btn('로그인으로','go:06')),
+  '13':()=>head('13 · 내 계정','보안·계정')+actions(btn('로그아웃','logout'),btn('돌아가기','back')),
+  start:()=>head('앱 시작','세션 확인 중')+notice('저장된 로그인과 장부 접근 권한을 확인하고 있습니다.'),
+  offline:()=>head('앱 시작','연결을 확인해 주세요')+notice('네트워크 오류로 세션 확인을 마치지 못했습니다.','error')+btn('다시 시도','retry','primary')
+};
+const placeholders={'03':'달력','08':'결산','09':'영수증으로 기록','11':'증빙 갤러리','07-team':'팀 만들기','07-ledger':'장부 만들기','07-members':'장부 참여자','12-invite':'초대 확인','00-public':'참여 가능한 장부','06-join':'회원가입'};
+const screenNames={'00':'팀·장부 선택','01':'홈','02':'거래 내역','04':'설정','05':'거래 상세','05-edit':'거래 수정','07':'목표 예산','10':'거래 등록'};
+function render() {
+  const nav=document.querySelector('.nav');
+  const ledger=['01','02','03','04','05','05-edit','07','08','09','10','11','07-members'].includes(page);
+  const mode=$('view').value;
+  const active={'05':caller,'05-edit':caller,'07':'04','10':formCaller}[page]||page;
+  const visibleNav=ledger&&mode!=='forbidden';
+  nav.hidden=!visibleNav; nav.style.display=visibleNav?'':'none';
+  document.querySelector('.layout').classList.toggle('with-nav',visibleNav);
+  nav.innerHTML=[['03','달력'],['02','거래 내역'],['01','홈'],['08','결산'],['04','설정']].map(([id,label])=>btn(label,id==='03'||id==='08'?'sub:'+id:'go:'+id,id===active?'active':'')).join('');
+  nav.querySelector('.active')?.setAttribute('aria-current','page');
+  $('context').innerHTML=visibleNav?btn('팀·장부 전환','go:00','quiet'):'';
+  if(mode!=='normal'&&screenNames[page]){
+    const messages={loading:'정보를 불러오는 중입니다.',empty:page==='05'?'거래를 찾을 수 없습니다.':'표시할 결과가 없습니다.',error:'정보를 불러오지 못했습니다. 연결 상태를 확인해 주세요.',forbidden:'이 화면에 접근할 수 없습니다.'};
+    screen.innerHTML=head(page,screenNames[page])+notice(messages[mode],mode==='error'?'error':'')+
+      (mode==='loading'?'<div class="card" aria-hidden="true"><div class="placeholder short"></div><div class="placeholder"></div></div>':'')+
+      (mode==='error'?btn('다시 시도','refresh','primary'):mode==='forbidden'?btn('팀·장부 선택','go:00'):mode==='empty'&&page==='05'?btn('원래 화면으로','origin'):'');
+  } else screen.innerHTML=pages[page]?.()||outside(page.split('-')[0],placeholders[page]||'화면');
+}
+function submitTransaction(form) {
+  const d=new FormData(form), editing=page==='05-edit', before=editing?selected:null;
+  const category=d.get('category'), amount=Number(d.get('amount'));
+  const name=formType==='out'?String(d.get('merchant')).trim():category;
+  const removed=d.getAll('remove').map(Number);
+  const files=[...(before?.files||[]).filter((_,i)=>!removed.includes(i)),...Array.from(form.elements.files.files,f=>f.name)];
+  if(!name||!Number.isSafeInteger(amount)||amount<1||amount>1000000000||files.length>5){
+    $('form-error').innerHTML=notice('거래처·금액(1원~10억 원)·증빙 개수(최대 5개)를 확인해 주세요.','error');return;
+  }
+  const record={id:before?.id||serial,type:formType,name,amount,category,date:d.get('date'),memo:d.get('memo'),depositor:d.get('depositor'),author:before?.author||(admin()?'김지우':'이하늘'),files};
+  const commit=()=>{
+    if(editing) transactions=transactions.map(t=>t.id===record.id?record:t);
+    else { serial++;transactions.unshift(record);caller=formCaller; }
+    selected=record;go('05');
+  };
+  const current=spent(), expected=current+(formType==='out'?amount:0)-(before?.type==='out'?before.amount:0);
+  if(budget.target!==null&&expected>current&&expected>budget.target){
+    const summary=kv('현재 지출',money(current))+kv('저장 후 지출',money(expected))+kv('목표 예산',money(budget.target))+kv('초과액',money(expected-budget.target));
+    if(budget.policy==='BLOCK') $('form-error').innerHTML=notice('예산 초과로 저장할 수 없습니다. 금액을 확인해 주세요.','error')+summary;
+    else modal('목표 예산을 초과합니다',summary,commit,'확인 후 저장');
+    return;
+  }
+  commit();
+}
+function saveBudget(next,reason) {
+  if(!editable()) return;
+  const label=v=>v===null?'미설정':money(v);
+  const changed=JSON.stringify(next)!==JSON.stringify(budget);
+  const commit=()=>{
+    if(changed) budgetHistory.unshift({change:label(budget.target)+' → '+label(next.target),reason});
+    budget=next;budgetEditing=false;render();
+  };
+  if(next.target!==null&&spent()>next.target&&changed)
+    modal('현재 지출이 새 목표 예산을 초과합니다',kv('확정 지출',money(spent()))+kv('새 목표 예산',money(next.target))+kv('초과액',money(spent()-next.target)),commit,'확인 후 저장');
+  else commit();
+}
+function cancelForm() {
+  const next=page==='05-edit'?'05':formCaller;
+  if($('transaction')?.dataset.dirty) modal('입력을 폐기할까요?','<p>계속 작성하려면 취소를 선택하세요.</p>',()=>go(next),'폐기하고 돌아가기');
+  else go(next);
+}
+document.addEventListener('click',e=>{
+  const action=e.target.closest('[data-act]')?.dataset.act;
+  if(!action) return;
+  const [name,value]=action.split(':');
+  const navigate=next=>{
+    if(page==='02') listScroll=window.scrollY;
+    if($('transaction')?.dataset.dirty) modal('입력을 폐기할까요?','<p>계속 작성하려면 취소를 선택하세요.</p>',next,'폐기하고 이동');
+    else if($('budget-form')?.dataset.dirty) modal('예산 변경을 폐기할까요?','<p>계속 편집하려면 취소를 선택하세요.</p>',next,'폐기하고 이동');
+    else next();
+  };
+  const handlers={
+    go:()=>navigate(()=>go(value)),sub:()=>navigate(()=>openSub(value)),
+    back:()=>go(previous||'01'),'picker-back':()=>go(pickerCaller||'01'),origin:()=>go(caller),
+    record:()=>{formCaller=page;formType='out';if(page==='02')listScroll=window.scrollY;go('10');},
+    tx:()=>{caller=page;if(page==='02')listScroll=window.scrollY;selected=transactions.find(t=>t.id===Number(value));go('05');},
+    edit:()=>{formType=selected.type;go('05-edit');},
+    type:()=>{if(value!==formType)navigate(()=>{formType=value;render();});},
+    'cancel-form':cancelForm,
+    delete:()=>modal('이 거래를 삭제할까요?',`<p>${safe(selected.name)} · ${money(selected.amount)}</p><p>삭제 후 장부 잔액과 거래 목록이 갱신됩니다.</p>`,()=>{transactions=transactions.filter(t=>t.id!==selected.id);selected=null;go(caller);},'거래 삭제'),
+    clear:()=>{filters={};render();},
+    logout:()=>modal('로그아웃할까요?','<p>다시 사용하려면 로그인해 주세요.</p>',()=>{authMessage='로그아웃했습니다.';go('06');},'로그아웃'),
+    'reset-done':()=>{authMessage='비밀번호 재설정이 완료되었습니다. 새 비밀번호로 로그인해 주세요.';go('06');},
+    budget:()=>{budgetEditing=false;go('07');},
+    'budget-edit':()=>{budgetEditing=true;render();$('budget-form').elements.amount.focus();},
+    'budget-cancel':()=>navigate(()=>{budgetEditing=false;render();}),
+    'budget-unset':()=>{
+      const reason=$('budget-form').elements.reason.value.trim();
+      if(!reason){$('budget-error').innerHTML=notice('예산 해제 사유를 입력해 주세요.','error');return;}
+      modal('목표 예산을 해제할까요?',kv('기존 목표 예산',money(budget.target))+'<p>예산 소진율과 초과 정책 적용이 중지됩니다. 거래와 잔액은 보존됩니다.</p>',()=>saveBudget({...budget,target:null},reason),'미설정으로 전환');
+    },
+    retry:()=>startup(true),refresh:()=>go(page)
+  };
+  handlers[name]?.();
+});
+document.addEventListener('input',e=>{
+  if(['transaction','budget-form'].includes(e.target.form?.id))e.target.form.dataset.dirty='true';
+});
+document.addEventListener('submit',e=>{
+  const form=e.target;
+  e.preventDefault();
+  if(form.id==='login'){context=$('scenario').value;enter();}
+  if(form.id==='filters'){
+    const next=Object.fromEntries(new FormData(form));
+    if(next.from&&next.to&&next.from>next.to){$('filter-error').innerHTML=notice('종료일은 시작일 이후로 선택해 주세요.','error');return;}
+    filters=next;listScroll=0;render();
+  }
+  if(form.id==='transaction')submitTransaction(form);
+  if(form.id==='budget-form'){
+    const d=new FormData(form), reason=String(d.get('reason')).trim(), target=Number(d.get('amount'));
+    if(target!==budget.target&&!reason){$('budget-error').innerHTML=notice('예산 금액 변경 사유를 입력해 주세요.','error');return;}
+    saveBudget({target,policy:d.get('policy'),warning:d.has('warning'),critical:d.has('critical')},reason);
+  }
+});
+$('restart').onclick=()=>startup();
+$('view').onchange=()=>render();
+$('role').onchange=()=>render();
+$('preset').onchange=()=>{setPreset();render();};
+startup();
+</script>
+</html>
+
+
